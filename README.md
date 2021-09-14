@@ -6,6 +6,6 @@
 
 #2 Update {PROVIDER TOKEN} on line 33  with Postman Update Organization Token response
 
-#3 add csv file to root
+#3 Add csv file to root
 
-#4 run `python3 main.py {csvFileName.csv}`
+#4 Run `python3 main.py {csvFileName.csv}`
