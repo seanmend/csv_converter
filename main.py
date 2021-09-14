@@ -14,27 +14,35 @@ def csv_converter(csv_path):
         iter_list = iter(csv_reader)
         next(iter_list)
 
-        for row in iter_list:
-            row_list = list(row.items())
-            user_id = row_list[0][1]
-            department_api_id = row_list[5][1]
-            print('each provider:')
-            print(user_id, 'and', department_api_id)
+        try:
+            for row in iter_list:
+                row_list = list(row.items())
+                user_id = row_list[0][1]
+                department_api_id = row_list[5][1]
+                print('each provider:')
+                print(user_id, 'and', department_api_id)
 
-            json_response = json.dumps({
-                "userOrg.integrations.advancedmd.department": department_api_id
-            })
+                try:
+                    json_response = json.dumps({
+                        "userOrg.integrations.advancedmd.department": department_api_id
+                    })
 
-            r = requests.put(f'https://api.mendfamily.com/property/user/{user_id}', headers={
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-Access-Token': '{ENTER TOKEN FROM PROVIDER}'
-            }, data=json_response)
+                    r = requests.put(f'https://api.mendfamily.com/property/user/{user_id}', headers={
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Access-Token': '{PROVIDER TOKEN}'
+                    }, data=json_response)
 
-            print(r.apparent_encoding)
-            print(r.url)
-            print(r.headers)
-            print(r.content)
+                    print(r.apparent_encoding)
+                    print(r.url)
+                    print(r.headers)
+                    print(r.content)
+
+                except requests.exceptions.RequestException as err:
+                    raise SystemExit(err)
+
+        except LookupError as err:
+            raise SystemExit(err)
 
 
 if __name__ == '__main__':
